@@ -209,19 +209,21 @@ NeoBundle 'alpaca-tc/alpaca_powertabline'
 NeoBundle 'https://github.com/Lokaltog/powerline.git'
 "NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'Lokaltog/powerline-fontpatcher'
-NeoBundle 'https://github.com/kovidgoyal/powerline-daemon' 
+NeoBundle 'https://github.com/kovidgoyal/powerline-daemon'
+NeoBundle 'thinca/vim-quickrun'
+
 filetype plugin indent on     " required!
 filetype indent on
-syntax on 
-let g:tagbar_type_php = {        
-\ 'ctagstype' : 'php',           
-\ 'kinds' : [                    
-\ 'i:interfaces:0:1',            
-\ 'c:classes:0:1',               
-\ 'd:constant definitions:0:0',  
-\ 'f:functions:0:1',             
-\ 'j:javascript functions:0:1'   
-\ ]                              
+syntax on
+let g:tagbar_type_php = {
+\ 'ctagstype' : 'php',
+\ 'kinds' : [
+\ 'i:interfaces:0:1',
+\ 'c:classes:0:1',
+\ 'd:constant definitions:0:0',
+\ 'f:functions:0:1',
+\ 'j:javascript functions:0:1'
+\ ]
 \ }
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
@@ -288,7 +290,7 @@ function! s:unite_gitignore_source()
   call unite#custom#source('file_rec', 'ignore_pattern', pattern)
   call unite#custom#source('grep', 'ignore_pattern', pattern)
 endfunction
-"call s:unite_gitignore_source() 
+"call s:unite_gitignore_source()
 
 """"""""" tagbar
 "autocmd VimEnter * TagbarToggle
@@ -420,7 +422,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 " neosnippet
 "------------------------------------
 " neosnippet "{{{
- 
+
 " snippetを保存するディレクトリを設定してください
 " example
  let s:default_snippet = neobundle#get_neobundle_dir() . '/neosnippet/autoload/neosnippet/snippets' " 本体に入っているsnippet
@@ -440,7 +442,7 @@ autocmd User Rails/config/routes.rb      NeoSnippetSource ~/.vim/snippet/ruby.ra
 
 " Enable snipMate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1
- 
+
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
@@ -466,7 +468,7 @@ noremap :rs :<C-u>Unite rails/stylesheet<CR>
 noremap :rj :<C-u>Unite rails/javascript<CR>
 noremap :rr :<C-u>Unite rails/route<CR>
 noremap :rg :<C-u>Unite rails/gemfile<CR>
-noremap :rt :<C-u>Unite rails/spec<CR> 
+noremap :rt :<C-u>Unite rails/spec<CR>
 
 "easymotion
 " Lokaltog/vim-easymotion
@@ -504,7 +506,7 @@ set noshowmode
 
 ""MARKDOWN
 au BufRead,BufNewFile *.md set filetype=markdown
-noremap :po :<C-u>PrevimOpen<CR> 
+noremap :po :<C-u>PrevimOpen<CR>
 
 " exe script
 autocmd BufNewFile,BufRead *.rb nnoremap <C-s> :!ruby %
@@ -588,4 +590,80 @@ endif
 "let g:syntastic_auto_loc_list = 1
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
-"
+
+"文末の半角スペースを自動で削除
+"autocmd BufWritePre * :%s/\s\+$//ge
+
+"-------------------------------------------------------------------------------
+" インデント Indent
+"-------------------------------------------------------------------------------
+set autoindent   " 自動でインデント
+"set paste        " ペースト時にautoindentを無効に(onにするとautocomplpop.vimが動かない)
+set smartindent  " 新しい行を開始したときに、新しい行のインデントを現在行と同じ量にする。
+set cindent      " Cプログラムファイルの自動インデントを始める
+
+" softtabstopはTabキー押し下げ時の挿入される空白の量，0の場合はtabstopと同じ，BSにも影響する
+set tabstop=2 shiftwidth=2 softtabstop=0
+
+" 連続インデント
+vnoremap < <gv
+vnoremap > >gv
+
+if has("autocmd")
+  "ファイルタイプの検索を有効にする
+  filetype plugin on
+  "そのファイルタイプにあわせたインデントを利用する
+  filetype indent on
+  " これらのftではインデントを無効に
+  "autocmd FileType php filetype indent off
+
+  autocmd FileType apache     setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType aspvbs     setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType c          setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType cpp        setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType cs         setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType css        setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType diff       setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType eruby      setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType html       setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType javascript setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType python     setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType sh         setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType sql        setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType vb         setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType vim        setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType wsh        setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType xhtml      setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType xml        setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType zsh        setlocal sw=4 sts=4 ts=4 et
+  autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
+endif
+
+"java
+""execute pathogen#infect()
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+
+"文末の半角スペースを自動で削除
+"autocmd BufWritePre * :%s/\s\+$//ge
+
+" quickrun
+let g:quickrun_config = {
+\   "_" : {
+\       "outputter/buffer/split" : 'vertical',
+\       "outputter/buffer/close_on_empty" : 1
+\   },
+\}
+nnoremap <expr><silent> <C-c> quickrun#is_running( ? quickrun#sweep_sessions( : "\<C-c>"))
+noremap :qr :<C-u>QuickRun<CR>
