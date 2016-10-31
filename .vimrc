@@ -165,15 +165,24 @@ filetype off
 
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim
-    call neobundle#rc(expand('~/.vim/bundle/'))
-endif
+    call neobundle#begin(expand('~/.vim/bundle'))
+
 " originalrepos on github
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 NeoBundle 'VimClojure'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'honza/vim-snippets'
@@ -211,6 +220,9 @@ NeoBundle 'https://github.com/Lokaltog/powerline.git'
 NeoBundle 'Lokaltog/powerline-fontpatcher'
 NeoBundle 'https://github.com/kovidgoyal/powerline-daemon'
 NeoBundle 'thinca/vim-quickrun'
+
+call neobundle#end()
+endif
 
 filetype plugin indent on     " required!
 filetype indent on
@@ -603,3 +615,6 @@ let g:quickrun_config = {
 \}
 nnoremap <expr><silent> <C-c> quickrun#is_running( ? quickrun#sweep_sessions( : "\<C-c>"))
 noremap :qr :<C-u>QuickRun<CR>
+
+" neocomplete 自動補完をON
+"let g:neocomplete#enable_at_startup = 1
