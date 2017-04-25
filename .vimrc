@@ -18,54 +18,23 @@ augroup source-vimrc
   autocmd BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
 augroup END
 
-" Edit vimrc
 nmap ,v :edit $MYVIMRC<CR>
 
 "--------------------------------------------------------------------- ------
-" 検索に関する設定:
-
-" 検索時に大文字小文字を無視 (noignorecase:無視しない)
 set ignorecase
-
-" 大文字小文字の両方が含まれている場合は大文字小文字を区別
 set smartcase
-
-" インクリメンタルサーチ
 set incsearch
-
-" マッチした個所をハイライト
 set hlsearch
-
-" 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
 set wrapscan
-
-" mouse
 set mouse=a
-"set ttymouse=xterm2
-"--------------------------------------------------------------------- ------
-" 編集に関する設定:
-
-" vi 互換モードにしない
 set nocompatible
-
-" バックアップファイルを作らない
 set nobackup
-
-" 常にステータス行を表示
 set laststatus=2
-
-" カーソル位置を表示
 set ruler
-
-" 行番号を表示
 set number
-
-" Tabを明示的に表示させる
 set list
-"set listchars=tab:>-
-"set listchars=tab:▸\ ,eol:¬
-"set listchars=tab:>-
 set listchars=eol:\ ,tab:__,extends:_
+
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 highlight WhitespaceEOL ctermbg=4 guibg=gray
 augroup ignorechars
@@ -75,40 +44,14 @@ augroup ignorechars
 augroup END
 
 
-" Tab文字を画面上の見た目で何文字分に展開するか
 set tabstop=4
-
-" インデントをTabではなくスペースにする
-"set expandtab
-
-" 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
 set showmatch
-
-" カラー表示
-syntax on
-
-" 入力中のコマンドを表示
 set showcmd
-
-" ステータスラインに文字コードと改行コードを表示させる
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-
-" <BS>キーが使える範囲
 set backspace=indent,eol,start
-
-" コマンドライン補完するときに強化されたものを使う
 set wildmenu
-
-" バックスペースキーを有効にする
 set t_kb=^V<BS>
-
-" デリートキーを有効にする
 set t_kD=^V<Del>
-
-" ビープ音のかわりに画面をフラッシュさせる
-"set visualbell
-
-" タイトルを表示
 set title
 
 " PHPシンタックスエラー :makeでチェックできます。
@@ -119,17 +62,12 @@ autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
 
 filetype plugin on
 
-" viminfoの設定
-"set viminfo=""
-
 colorscheme darkblue
 "set bg=dark
 hi clear
-if exists("syntax_on")
-   syntax reset
-endif
 
 let colors_name = "darkblue"
+"let colors_name = "molokai"
 
 "##khara mod
 noremap  
@@ -188,35 +126,25 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'jpalardy/vim-slime'
 NeoBundle 'scrooloose/syntastic'
-"NeoBundle 'https://bitbucket.org/kovisoft/slimv'
 NeoBundle "majutsushi/tagbar"
 NeoBundle "tpope/vim-rails"
 NeoBundle "scrooloose/nerdtree"
 NeoBundle 'basyura/unite-rails'
 NeoBundle 'alpaca-tc/alpaca_tags'
-"NeoBundle 'vim-endwise'
 NeoBundle 'toyamarinyon/vim-swift'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'othree/eregex.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vimtaku/hl_matchit.vim.git'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'scala.vim'
 NeoBundle 'tpope/vim-fugitive'
-"NeoBundle 'java.vim'
-"NeoBundle 'javaid.vim'
-"NeoBundle 'javacomplete' "NeoBundle 'jcommenter.vim'
-"NeoBundle 'java_getset.vim'
-"NeoBundle 'java_checkstyle.vim'
-"NeoBundle 'javaid.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'alpaca-tc/alpaca_powertabline'
 NeoBundle 'https://github.com/Lokaltog/powerline.git'
-"NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'Lokaltog/powerline-fontpatcher'
 NeoBundle 'https://github.com/kovidgoyal/powerline-daemon'
 NeoBundle 'thinca/vim-quickrun'
@@ -224,9 +152,9 @@ NeoBundle 'thinca/vim-quickrun'
 call neobundle#end()
 endif
 
+syntax on
 filetype plugin indent on     " required!
 filetype indent on
-syntax on
 let g:tagbar_type_php = {
 \ 'ctagstype' : 'php',
 \ 'kinds' : [
@@ -309,6 +237,7 @@ endfunction
 nmap <F7> :TagbarToggle<CR>
 let g:tagbar_sort = 0
 let mapleader = ","
+let g:tagbar_width = 30
 
 "ctags
 let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8/bin/ctags'
@@ -324,6 +253,7 @@ set clipboard=unnamed,autoselect
 
 """""""""" NERDTree
 nmap <F6> :NERDTree<CR>
+let NERDTreeWinSize=26
 "autocmd VimEnter * NERDTree
 
 " Anywhere SID.
@@ -481,6 +411,7 @@ noremap :rj :<C-u>Unite rails/javascript<CR>
 noremap :rr :<C-u>Unite rails/route<CR>
 noremap :rg :<C-u>Unite rails/gemfile<CR>
 noremap :rt :<C-u>Unite rails/spec<CR>
+noremap :rl :<C-u>Unite rails/lib<CR>
 
 "easymotion
 " Lokaltog/vim-easymotion
@@ -501,24 +432,11 @@ nnoremap ? :M?
 nnoremap ,/ /
 nnoremap ,? ?
 
-"powerline (lightline.vim)
-"let g:lightline = {
-"      \ 'colorscheme': 'solarized',
-"      \ 'component': {
-"      \   'readonly': '%{&readonly?"\u2b64":""}',
-"      \ },
-"      \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-"      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" },
-"      \ }
 set laststatus=2
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
 set noshowmode
 
-
-""MARKDOWN
-au BufRead,BufNewFile *.md set filetype=markdown
-noremap :po :<C-u>PrevimOpen<CR>
 
 " exe script
 autocmd BufNewFile,BufRead *.rb nnoremap <C-s> :!ruby %
@@ -527,20 +445,6 @@ autocmd BufNewFile,BufRead *.pl nnoremap <C-s> :!perl %
 
 "scala.vim
 autocmd BufRead,BufNewFile *.scala set filetype=scala
-
-" vim-fugitive
-" grep検索の実行後にQuickFix Listを表示する
-"autocmd QuickFixCmdPost *grep* cwindow
-" ステータス行に現在のgitブランチを表示する
-"set statusline+=%{fugitive#statusline()}
-"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-"
-"scala
-noremap :gb :<C-u>!gradle build<CR>
-noremap :gc :<C-u>!gradle clean<CR>
-noremap :gd :<C-u>!gradle dist<CR>
-noremap :scm :<C-u>!sbt compile<CR>
-noremap :scl :<C-u>!sbt clean<CR>
 
 "-------------------------------------------------------------------------------
 " インデント Indent
@@ -593,19 +497,6 @@ if has("autocmd")
   autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
 endif
 
-"java
-""execute pathogen#infect()
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
-"文末の半角スペースを自動で削除
-"autocmd BufWritePre * :%s/\s\+$//ge
-
 " quickrun
 let g:quickrun_config = {
 \   "_" : {
@@ -618,3 +509,4 @@ noremap :qr :<C-u>QuickRun<CR>
 
 " neocomplete 自動補完をON
 "let g:neocomplete#enable_at_startup = 1
+let g:neocomplcache_max_list = 30
