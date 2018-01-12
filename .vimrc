@@ -19,6 +19,7 @@ augroup source-vimrc
 augroup END
 
 nmap ,v :edit $MYVIMRC<CR>
+:set tags=./tags;
 
 "--------------------------------------------------------------------- ------
 set ignorecase
@@ -63,9 +64,10 @@ autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
 filetype plugin on
 
 colorscheme darkblue
+set background=dark
+"colorscheme hybrid
 "set bg=dark
-hi clear
-
+hi clear 
 let colors_name = "darkblue"
 "let colors_name = "molokai"
 
@@ -148,6 +150,8 @@ NeoBundle 'https://github.com/Lokaltog/powerline.git'
 NeoBundle 'Lokaltog/powerline-fontpatcher'
 NeoBundle 'https://github.com/kovidgoyal/powerline-daemon'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'rust-lang/rust.vim'
+NeoBundle 'fatih/vim-go'
 
 call neobundle#end()
 endif
@@ -240,7 +244,7 @@ let mapleader = ","
 let g:tagbar_width = 30
 
 "ctags
-let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8/bin/ctags'
+let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 :set backspace=indent,eol,start
 :set laststatus=2
 let Tlist_Sort_Type = "name"
@@ -510,3 +514,7 @@ noremap :qr :<C-u>QuickRun<CR>
 " neocomplete 自動補完をON
 "let g:neocomplete#enable_at_startup = 1
 let g:neocomplcache_max_list = 30
+
+"ctag
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-i> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
