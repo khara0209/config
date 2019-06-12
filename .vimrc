@@ -518,3 +518,6 @@ let g:neocomplcache_max_list = 30
 "ctag
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 nnoremap <C-i> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
+" 上に記載した方法を取っていない方は which python3 とかしてそのPATHを設定してください。
