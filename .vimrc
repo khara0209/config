@@ -33,8 +33,8 @@ set nobackup
 set laststatus=2
 set ruler
 set number
-set list
-set listchars=eol:\ ,tab:__,extends:_
+"set list
+"set listchars=eol:\ ,tab:__,extends:_
 
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 highlight WhitespaceEOL ctermbg=4 guibg=gray
@@ -485,7 +485,7 @@ if has("autocmd")
   autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
   autocmd FileType javascript setlocal sw=2 sts=2 ts=2 et
   autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
+"  autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
   autocmd FileType python     setlocal sw=4 sts=4 ts=4 et
   autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
@@ -521,3 +521,27 @@ nnoremap <C-i> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 " 上に記載した方法を取っていない方は which python3 とかしてそのPATHを設定してください。
+
+
+function! ProfileCursorMove() abort
+  let profile_file = expand('~/log/vim-profile.log')
+  if filereadable(profile_file)
+    call delete(profile_file)
+  endif
+
+  normal! gg
+  normal! zR
+
+  execute 'profile start ' . profile_file
+  profile func *
+  profile file *
+
+  augroup ProfileCursorMove
+    autocmd!
+    autocmd CursorHold <buffer> profile pause | q
+  augroup END
+
+  for i in range(100)
+    call feedkeys('j')
+  endfor
+endfunction
